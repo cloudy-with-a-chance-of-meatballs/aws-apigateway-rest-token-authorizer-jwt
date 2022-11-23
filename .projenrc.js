@@ -21,7 +21,6 @@ const project = new typescript.TypeScriptProject({
   autoApproveUpgrades: true,
   autoApproveOptions: {
     allowedUsernames: ['dependabot[bot]'],
-    secret: 'PROJEN_GITHUB_TOKEN',
   },
   dependabot: true,
   dependabotOptions: {
