@@ -1,11 +1,33 @@
-const { typescript } = require('projen');
+const { typescript, javascript } = require('projen');
 const project = new typescript.TypeScriptProject({
+  author: 'cfuerst',
+  authorAddress: 'c.fuerst@gmail.com',
   defaultReleaseBranch: 'main',
-  name: 'aws-apigateway-rest-token-authorizer-jwt',
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  name: '@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt',
+  repositoryUrl: 'https://github.com/cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt.git',
+  description: 'Use as jwt authorizer for api gateways on aws',
+  stability: 'experimental',
+  license: 'MIT',
+  copyrightOwner: '@cloudy-with-a-chance-of-meatballs',
+  keywords: ['aws', 'cdk', 'lambda', 'apigateway', 'rest', 'api', 'jwt', 'tokenauthorizer', 'jwks', 'authorizer', 'token'],
+  deps: [
+    '@types/aws-lambda',
+    'jsonwebtoken',
+    '@types/jsonwebtoken',
+    'jwks-rsa',
+    'ajv',
+  ],
+  npmAccess: javascript.NpmAccess.PUBLIC,
+  autoApproveUpgrades: true,
+  autoApproveOptions: {
+    allowedUsernames: ['dependabot[bot]'],
+    secret: 'PROJEN_GITHUB_TOKEN',
+  },
+  dependabot: true,
+  dependabotOptions: {
+    labels: ['auto-approve'],
+  },
+  codeCov: true,
+  minNodeVersion: '16.18.1',
 });
 project.synth();
