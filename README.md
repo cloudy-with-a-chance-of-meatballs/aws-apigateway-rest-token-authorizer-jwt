@@ -28,5 +28,16 @@ const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
 
 ### Javascript
 ```javascript
-....
+// package.json
+// {
+//   "main": "index.js",
+//   "dependencies": {
+//     "@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt": "^0.0.0"
+//   }
+// }
+
+
+const { AwsApigatewayRestTokenAuthorizerJwt } = require('@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt');
+
+const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
 ```
