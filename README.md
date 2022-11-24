@@ -41,3 +41,49 @@ const { AwsApigatewayRestTokenAuthorizerJwt } = require('@cloudy-with-a-chance-o
 
 const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
 ```
+
+### Token verification
+
+```javascript
+
+// against asymmetric or symmetric "secret"
+
+authorizer.getAuthResponse(
+  { type: 'TOKEN', methodArn: 'methodArn', authorizationToken: 'JWTTOKENSTR' },
+  { 
+    verificationStrategy: { 
+      strategyName: 'argument', 
+      secret: 'YOUR-SECRET-OR-PUB-KEY-ONELINER'
+    } 
+  }
+);
+
+// against pub key from jwks
+
+authorizer.getAuthResponse(
+  { type: 'TOKEN', methodArn: 'methodArn', authorizationToken: 'JWTTOKENSTR' },
+  { 
+    verificationStrategy: { 
+      strategyName: 'jwksFromUriByKid',
+      uri: 'https://example.auth0.com/.well-known/jwks.json',
+      kid: 'MN9dzu6gnI4ZZ-tjylYNW' 
+    }
+  }
+);
+```
+
+### Token validation
+
+```javascript
+
+authorizer.getAuthResponse(
+  { type: 'TOKEN', methodArn: 'methodArn', authorizationToken: 'JWTTOKENSTR' },
+  { 
+    payloadValidationStrategy: {
+      strategyName: 'schema',
+      schema: 'JSONSTR',
+    }
+  }
+);
+
+```
