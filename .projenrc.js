@@ -18,6 +18,7 @@ const project = new typescript.TypeScriptProject({
     'ajv',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
+  autoMerge: true,
   autoApproveUpgrades: true,
   autoApproveOptions: {
     allowedUsernames: ['dependabot[bot]'],
