@@ -28,5 +28,6 @@ const project = new typescript.TypeScriptProject({
   },
   codeCov: true,
   minNodeVersion: '16.18.1',
+  releaseToNpm: true,
 });
 project.synth();
