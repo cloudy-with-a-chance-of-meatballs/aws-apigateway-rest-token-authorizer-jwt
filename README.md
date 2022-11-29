@@ -26,6 +26,42 @@ import { AwsApigatewayRestTokenAuthorizerJwt } from '@cloudy-with-a-chance-of-me
 const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
 ```
 
+### Recommended Typescript usage inside a Lambda function added to a RestAPI as token authorizer
+
+```typescript
+// package.json
+// {
+//   "main": "index.js",
+//   "type": "module",
+//   "dependencies": {
+//     "@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt": "^0.0.0",
+//     "@types/aws-lambda": "^8.10.109"
+//   }
+// }
+
+import { AwsApigatewayRestTokenAuthorizerJwt }          from '@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt';
+import { AuthResponse, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
+
+const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
+
+// handle event
+export const authHandler = async (event: APIGatewayTokenAuthorizerEvent): Promise<AuthResponse> => {
+  const options: ITokenAuthorizerOptions = {
+    verificationStrategy: {
+      strategyName: "argument", // or jwksFromUriByKid and provide uri and kid
+      secret: "foobar",
+    },
+    payloadValidationStrategy: {
+      strategyName: "schema", 
+      schema: JSON.stringify({
+          properties:{ iss: { enum: ['my_trusted_iss'] } } //...
+      }) 
+    }
+  };
+  return authorizer.getAuthResponse(event, options);
+};
+```
+
 ### Javascript
 ```javascript
 // package.json
@@ -45,7 +81,6 @@ const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
 ### Token verification
 
 ```javascript
-
 // against asymmetric or symmetric "secret"
 
 authorizer.getAuthResponse(
@@ -75,6 +110,7 @@ authorizer.getAuthResponse(
 ### Token validation
 
 ```javascript
+// JSONSTR = https://ajv.js.org/json-schema.html
 
 authorizer.getAuthResponse(
   { type: 'TOKEN', methodArn: 'methodArn', authorizationToken: 'JWTTOKENSTR' },
