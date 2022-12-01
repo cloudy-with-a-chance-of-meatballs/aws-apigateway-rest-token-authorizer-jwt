@@ -1,5 +1,6 @@
 import Ajv, { JTDDataType } from 'ajv/dist/jtd';
 import { AuthResponse, APIGatewayTokenAuthorizerEvent, PolicyDocument } from 'aws-lambda';
+import { flatten } from 'flat';
 import jwt, { Secret } from 'jsonwebtoken';
 import jwks from 'jwks-rsa';
 
@@ -100,7 +101,7 @@ export class AwsApigatewayRestTokenAuthorizerJwt {
   private authResponse(policyDocument: PolicyDocument, context: any): AuthResponse {
     return {
       principalId: 'user',
-      context: context,
+      context: flatten(context),
       policyDocument: policyDocument,
     } as AuthResponse;
   };

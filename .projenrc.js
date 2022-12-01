@@ -16,8 +16,11 @@ const project = new typescript.TypeScriptProject({
     '@types/jsonwebtoken',
     'jwks-rsa',
     'ajv',
+    '@types/flat',
+    'flat',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
+  autoMerge: true,
   autoApproveUpgrades: true,
   autoApproveOptions: {
     allowedUsernames: ['dependabot[bot]'],
@@ -28,5 +31,6 @@ const project = new typescript.TypeScriptProject({
   },
   codeCov: true,
   minNodeVersion: '16.18.1',
+  releaseToNpm: true,
 });
 project.synth();
