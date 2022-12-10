@@ -38,8 +38,10 @@
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.108",
+    "@types/flat": "^5.0.2",
     "@types/jsonwebtoken": "^8.5.9",
     "ajv": "^8.11.2",
+    "flat": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^3.0.0"
   },

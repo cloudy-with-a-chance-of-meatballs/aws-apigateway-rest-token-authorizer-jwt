@@ -16,6 +16,8 @@ const project = new typescript.TypeScriptProject({
     '@types/jsonwebtoken',
     'jwks-rsa',
     'ajv',
+    '@types/flat',
+    'flat',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
   autoMerge: true,

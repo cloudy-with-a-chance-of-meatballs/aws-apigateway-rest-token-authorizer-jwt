@@ -71,11 +71,19 @@
       "type": "runtime"
     },
     {
+      "name": "@types/flat",
+      "type": "runtime"
+    },
+    {
       "name": "@types/jsonwebtoken",
       "type": "runtime"
     },
     {
       "name": "ajv",
+      "type": "runtime"
+    },
+    {
+      "name": "flat",
       "type": "runtime"
     },
     {

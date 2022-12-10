@@ -4,18 +4,6 @@ import { AwsApigatewayRestTokenAuthorizerJwt, ITokenAuthorizerOptions } from '..
 const jwksUri = 'https://example.auth0.com/.well-known/jwks.json';
 const jwksKeyId = 'MN9dzu6gnI4ZZ-tjylYNW';
 
-//const symmetricSecret = 'secVal42';
-//const jwksUri = 'https://example.auth0.com/.well-known/jwks.json';
-//const jwksKeyId = 'MN9dzu6gnI4ZZ-tjylYNW';
-//const jwtPayloadValidationSchema = '{"properties":{"foo":{"enum":["bar"]}},"additionalProperties":true}';
-
-//const tokens = {
-//  invalidForKey: { payload: { foo: 'bar' }, token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.qPs0ENhI_xXsVP9PKgHR47AB6WShFWscA9xrDN0h1Bc' },
-//  validEmpty: { payload: { foo: 'bar' }, token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIifQ.s94EkJ9nxp6LVSUNtIHJPuIRE_2flT_fQclxXPMXSH4' },
-//  validExpired: { payload: { foo: 'bar' }, token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE2NjgxOTAzOTd9.v7c_zLEiPjr8vZO1qQa5XEfscv0JqRTYTsv6j4x86CI' },
-//  validNotExpiredValidationIssues: { payload: { foo: '42' }, token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiI0MiIsImV4cCI6MTk2ODE5MDM5N30.G2AYPQl3VPlSj-GqVuHVR_xb-pFClNN1ox2JsIijiNg' },
-//};
-
 const eventPayload = (token?: string): APIGatewayTokenAuthorizerEvent => {
   return { type: 'TOKEN', methodArn: 'methodArn', ...(token ? { authorizationToken: token } : {}) } as APIGatewayTokenAuthorizerEvent;
 };
@@ -118,6 +106,27 @@ describe('Token authorizer returns policyDocument', function () {
     );
     expect(response.policyDocument.Statement[0].Effect).toEqual('Allow');
     expect(response.context).toMatchObject({ error: false, foo: 'bar' });
+  });
+
+  it('verifies allow policy and flatted context data on valid token with asymetric key set', async () => {
+    const response: AuthResponse = await handler.getAuthResponse(
+      eventPayload(
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJub24tZmxhdC1wYXlsb2FkIjp7IngiOiJ5IiwiZm9vIjpbeyJhIjoiYiIsImMiOlsiZCIsImUiXX1dLCJ5Ijp7IngiOiJ5In19fQ.MQpGxAZOKnFiJyY8cHhPsZXAygMs6E9VCFJn5D-bog0',
+      ),
+      strategySecret('secVal42'),
+    );
+    expect(response.policyDocument.Statement[0].Effect).toEqual('Allow');
+    expect(response.context).toEqual(
+      {
+        'error': false,
+        'foo': 'bar',
+        'non-flat-payload.foo.0.a': 'b',
+        'non-flat-payload.foo.0.c.0': 'd',
+        'non-flat-payload.foo.0.c.1': 'e',
+        'non-flat-payload.x': 'y',
+        'non-flat-payload.y.x': 'y',
+      },
+    );
   });
 
   it('verifies deny policy on expired token', async () => {
