@@ -154,6 +154,7 @@ describe('Token authorizer returns policyDocument', function () {
   });
 
   it('verifies deny policy and context data on valid token with payload validation errors', async () => {
+    const expectedErrorMsgs = '[{"instancePath":"/foo","schemaPath":"/properties/foo/enum","keyword":"enum","params":{"allowedValues":["baz"]},"message":"must be equal to one of the allowed values"}]';
     const jwtPayloadValidationSchema = '{"properties":{"foo":{"enum":["baz"]}},"additionalProperties":true}';
     const response: AuthResponse = await handler.getAuthResponse(
       eventPayload(
@@ -169,8 +170,6 @@ describe('Token authorizer returns policyDocument', function () {
     );
     expect(response.policyDocument.Statement[0].Effect).toEqual('Deny');
     expect(response.context!.errorType).toEqual('JWT_PAYLOAD_VALIDATION_ERROR');
-    expect(response.context!.errorMessage).toEqual(
-      '[{"instancePath":"/foo","schemaPath":"/properties/foo/enum","keyword":"enum","params":{"allowedValues":["baz"]},"message":"must be equal to one of the allowed values"}]',
-    );
+    expect(response.context!.errorMessage).toEqual(expectedErrorMsgs);
   });
 });
