@@ -1,6 +1,10 @@
 {
   "name": "@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt",
   "description": "Use as jwt authorizer for api gateways on aws",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
