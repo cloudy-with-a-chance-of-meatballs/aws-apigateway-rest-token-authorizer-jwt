@@ -20,5 +20,6 @@ const project = new typescript.TypeScriptProject({
   dependabot: true,
   codeCov: true,
   releaseToNpm: true,
+  repository: "https://github.com/cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt",
 });
 project.synth();
