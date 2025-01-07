@@ -9,36 +9,16 @@ A typescript class strongly coupled to aws apigateway and lambda
 npm install @cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt
 ```
 
-### Typescript
+### Basic
 ```typescript
-// package.json
-// {
-//   "main": "index.js",
-//   "type": "module",
-//   "dependencies": {
-//     "@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt": "^0.0.0"
-//   }
-// }
-
-
 import { AwsApigatewayRestTokenAuthorizerJwt } from '@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt';
 
 const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
 ```
 
-### Recommended Typescript usage inside a Lambda function added to a RestAPI as token authorizer
+### Recommended usage inside a Lambda function added to a RestAPI as token authorizer
 
 ```typescript
-// package.json
-// {
-//   "main": "index.js",
-//   "type": "module",
-//   "dependencies": {
-//     "@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt": "^0.0.0",
-//     "@types/aws-lambda": "^8.10.109"
-//   }
-// }
-
 import { AwsApigatewayRestTokenAuthorizerJwt }          from '@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt';
 import { AuthResponse, APIGatewayTokenAuthorizerEvent } from "aws-lambda";
 
@@ -62,25 +42,9 @@ export const authHandler = async (event: APIGatewayTokenAuthorizerEvent): Promis
 };
 ```
 
-### Javascript
-```javascript
-// package.json
-// {
-//   "main": "index.js",
-//   "dependencies": {
-//     "@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt": "^0.0.0"
-//   }
-// }
-
-
-const { AwsApigatewayRestTokenAuthorizerJwt } = require('@cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt');
-
-const authorizer = new AwsApigatewayRestTokenAuthorizerJwt();
-```
-
 ### Token verification
 
-```javascript
+```typescript
 // against asymmetric or symmetric "secret"
 
 authorizer.getAuthResponse(
@@ -109,7 +73,7 @@ authorizer.getAuthResponse(
 
 ### Token validation
 
-```javascript
+```typescript
 // JSONSTR = https://ajv.js.org/json-schema.html
 
 authorizer.getAuthResponse(
