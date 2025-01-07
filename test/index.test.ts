@@ -49,7 +49,7 @@ describe('Token authorizer returns policyDocument', function () {
         eventPayload('foobar'),
         strategyJwks('invalid', '123'),
       ),
-    ).rejects.toThrow('JWKS_AGGREGATEERROR');
+    ).rejects.toThrow('JWKS_ERROR');
   });
 
   it('verifies exception if jwks has invalid response', async () => {
