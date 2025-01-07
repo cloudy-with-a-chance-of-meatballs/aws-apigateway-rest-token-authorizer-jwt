@@ -19,5 +19,6 @@ const project = new typescript.TypeScriptProject({
   npmAccess: javascript.NpmAccess.PUBLIC,
   dependabot: true,
   codeCov: true,
+  releaseToNpm: true,
 });
 project.synth();
