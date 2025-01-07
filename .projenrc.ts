@@ -3,10 +3,12 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'aws-apigateway-rest-token-authorizer-jwt',
   projenrcTs: true,
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  deps: [
+    '@types/aws-lambda',
+    'jsonwebtoken',
+    '@types/jsonwebtoken',
+    'jwks-rsa',
+    'ajv',
+  ],
 });
 project.synth();
