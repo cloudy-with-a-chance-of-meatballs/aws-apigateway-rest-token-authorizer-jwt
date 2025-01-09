@@ -1,4 +1,4 @@
-import { typescript, javascript } from 'projen';
+import { typescript, javascript, github } from 'projen';
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'aws-apigateway-rest-token-authorizer-jwt',
@@ -21,5 +21,13 @@ const project = new typescript.TypeScriptProject({
   codeCov: true,
   releaseToNpm: true,
   repository: 'https://github.com/cloudy-with-a-chance-of-meatballs/aws-apigateway-rest-token-authorizer-jwt',
+  githubOptions: {
+    projenCredentials: github.GithubCredentials.fromApp({
+      permissions: {
+        pullRequests: github.workflows.AppPermission.WRITE,
+        contents: github.workflows.AppPermission.WRITE,
+      },
+    }),
+  },
 });
 project.synth();
